@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAPPY BDAY POOKS</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6;
+            font-family: Arial, sans-serif;
+            overflow: hidden;  
+        }
+        .heart-container {
+            display: none;  
+            text-align: center;
+            margin-top: 20px;
+        }
+        .heart-img {
+            width: 300px;  
+            height: auto;
+            animation: heartbeat 1s infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        .btn {
+            padding: 15px 30px;
+            background-color: #ff4d4d;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+            position: relative;
+            overflow: hidden;  
+        }
+        .btn:hover {
+            background-color: #ff6666;
+        }
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-animation 1s ease-out forwards;
+        }
+        @keyframes particle-animation {
+            0% {
+                transform: scale(1) translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.5) translate(var(--x), var(--y));
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+     
+    <audio autoplay loop>
+        <source src="musique.mp3" type="audio/mp3">
+        Votre navigateur ne prend pas en charge la balise audio.
+    </audio>
+
+    <button class="btn" id="button" onclick="showHeartAndParticles(event)">psst click here</button>
+
+    <div class="heart-container" id="heart">
+        <img src="coeur_anniversaire.png" alt="Cœur Joyeux Anniversaire" class="heart-img">
+    </div>
+
+    <script>
+        function showHeartAndParticles(event) {
+            const button = event.target;
+            const heartContainer = document.getElementById('heart');
+
+             
+            heartContainer.style.display = 'block';
+
+             
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                
+                const x = (Math.random() - 0.5) * 100;  
+                const y = (Math.random() - 0.5) * 100;  
+
+                
+                particle.style.setProperty('--x', `${x}px`);
+                particle.style.setProperty('--y', `${y}px`);
+
+                
+                particle.style.left = `${event.clientX - button.offsetLeft}px`;
+                particle.style.top = `${event.clientY - button.offsetTop}px`;
+
+                button.appendChild(particle);
+
+                
+                particle.addEventListener('animationend', () => {
+                    particle.remove();
+                });
+            }
+
+            
+            setTimeout(() => {
+                button.style.display = 'none';
+            }, 1000); 
+        }
+    </script>
+</body>
+</html>
